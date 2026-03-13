@@ -98,4 +98,4 @@ grep -rl 'weights_only=True' --exclude-dir .git torchbench | xargs sed -i 's/wei
 
 (python3 torchbench/run_benchmark.py test_bench || exit_out "Error running test suite" $E_GENERAL) | tee benchmark.log
 
-grep -v TorchBenchModelConfig | python3 $script_dir/post_porcess > result.csv
+grep -v TorchBenchModelConfig | python3 $script_dir/post_process.py > result.csv
