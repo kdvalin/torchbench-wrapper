@@ -87,16 +87,15 @@ if [[ ! -d torchbench ]]; then
     fi
 fi
 
-cd torchbench
-python3 install.py
+python3 torchbench/install.py
 if [[ $? -ne 0 ]]; then
     exit_out "Error setting up models" $E_GENERAL
 fi
 
 #Torch v2.6+ restricts what can and can't be loaded via weights_only
 #Without this patch, some test error out, unable to run
-grep -rl 'weights_only=True' --exclude-dir .git . | xargs sed -i 's/weights_only=True/weights_only=False/g'
+grep -rl 'weights_only=True' --exclude-dir .git torchbench | xargs sed -i 's/weights_only=True/weights_only=False/g'
 
-(python3 run_benchmark.py test_bench || exit_out "Error running test suite" $E_GENERAL) | tee benchmark.log
+(python3 torchbench/run_benchmark.py test_bench || exit_out "Error running test suite" $E_GENERAL) | tee benchmark.log
 
-grep -v TorchBenchModelConfig | python3 post_process.py > result.csv
+grep -v TorchBenchModelConfig | python3 $script_dir/post_porcess > result.csv
