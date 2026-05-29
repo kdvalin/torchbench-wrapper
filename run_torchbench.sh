@@ -79,6 +79,7 @@ fi
 
 
 package_tool --wrapper_config "$script_dir/deps/$torch_device.json"
+package_tool --pip_index https://download.pytorch.org/whl/nightly/cpu --pip_packages torch,torchvision,torchaudio 
 
 if [[ ! -d torchbench ]]; then
     git clone https://github.com/pytorch/benchmark.git torchbench
